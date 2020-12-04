@@ -25,16 +25,15 @@ app.get("/api/student/:id", (req, res) => {
 });
 
 app.post("/api/student", (req, res) => {
-  const { name, currentClass, division } = req.body;
-  console.log(req.body);
   if (req.body != {}) {
+    const { name, currentClass, division } = req.body;
+
     if (name !== "" && currentClass !== "" && division !== "") {
-        const id = studentArr.length + 1;
-        const cclass = Number(currentClass);
+      const id = studentArr.length + 1;
       const student = {
         id,
         name,
-        currentClass: cclass,
+        currentClass: Number(currentClass),
         division,
       };
       studentArr.push(student);
@@ -48,7 +47,6 @@ app.post("/api/student", (req, res) => {
 
 app.put("/api/student/:id", (req, res) => {
   const student = studentArr.filter((s) => s.id == req.params.id);
-  //   console.log(req.body);
   if (req.body !== {} && student.length == 1) {
     const { name, currentClass, division } = req.body;
 
@@ -66,19 +64,16 @@ app.put("/api/student/:id", (req, res) => {
     studentArr = [...newStudentArr];
     res.send({ name: student[0].name });
   } else {
-    // console.log("in");
-    //   res.status(400);
     res.sendStatus(400);
   }
 });
 
 app.delete("/api/student/:id", (req, res) => {
   const student = studentArr.filter((s) => s.id == req.params.id);
-  console.log(student);
   if (student.length === 1) {
     const newStudentArr = studentArr.filter((s) => s.id != req.params.id);
-    studentArr = newStudentArr;
-    res.send("ok");
+      studentArr = newStudentArr;
+      res.send();
   } else {
     res.sendStatus(404);
   }
