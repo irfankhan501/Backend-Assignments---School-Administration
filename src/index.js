@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // your code goes here
+let id = studentArr.length;
 
 app.get("/api/student", (req, res) => {
   res.send(studentArr);
@@ -25,15 +26,15 @@ app.get("/api/student/:id", (req, res) => {
 });
 
 app.post("/api/student", (req, res) => {
+  const { name, currentClass, division } = req.body;
   if (req.body != {}) {
-    const { name, currentClass, division } = req.body;
-
     if (name !== "" && currentClass !== "" && division !== "") {
-      const id = studentArr.length + 1;
+      id = id + 1;
+      const cclass = Number(currentClass);
       const student = {
         id,
         name,
-        currentClass: Number(currentClass),
+        currentClass: cclass,
         division,
       };
       studentArr.push(student);
@@ -54,7 +55,7 @@ app.put("/api/student/:id", (req, res) => {
       student[0].name = name;
     }
     if (currentClass != undefined && currentClass != "") {
-      student[0].currentClass = Number(currentClass);
+      student[0].currentClass = currentClass;
     }
     if (division != undefined && division != "") {
       student[0].division = division;
@@ -70,10 +71,11 @@ app.put("/api/student/:id", (req, res) => {
 
 app.delete("/api/student/:id", (req, res) => {
   const student = studentArr.filter((s) => s.id == req.params.id);
+  console.log(student);
   if (student.length === 1) {
     const newStudentArr = studentArr.filter((s) => s.id != req.params.id);
-      studentArr = newStudentArr;
-      res.send();
+    studentArr = newStudentArr;
+    res.send("ok");
   } else {
     res.sendStatus(404);
   }
