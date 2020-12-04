@@ -29,11 +29,12 @@ app.post("/api/student", (req, res) => {
   console.log(req.body);
   if (req.body != {}) {
     if (name !== "" && currentClass !== "" && division !== "") {
-      const id = studentArr.length + 1;
+        const id = studentArr.length + 1;
+        const cclass = Number(currentClass);
       const student = {
         id,
         name,
-        currentClass,
+        currentClass: cclass,
         division,
       };
       studentArr.push(student);
@@ -55,7 +56,7 @@ app.put("/api/student/:id", (req, res) => {
       student[0].name = name;
     }
     if (currentClass != undefined && currentClass != "") {
-      student[0].currentClass = currentClass;
+      student[0].currentClass = Number(currentClass);
     }
     if (division != undefined && division != "") {
       student[0].division = division;
