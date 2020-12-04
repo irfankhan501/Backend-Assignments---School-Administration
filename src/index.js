@@ -63,7 +63,7 @@ app.put("/api/student/:id", (req, res) => {
     let newStudentArr = studentArr.filter((s) => s.id != req.params.id);
     newStudentArr.push(student[0]);
     studentArr = [...newStudentArr];
-    res.send({ name: student.name });
+    res.send({ name: student[0].name });
   } else {
     // console.log("in");
     //   res.status(400);
