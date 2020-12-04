@@ -18,7 +18,7 @@ app.get("/api/student", (req, res) => {
 app.get("/api/student/:id", (req, res) => {
   const student = studentArr.filter((s) => s.id == req.params.id);
   if (student.length === 1) {
-    res.send(student);
+    res.send(student[0]);
   } else {
     res.sendStatus(404);
   }
@@ -47,25 +47,25 @@ app.post("/api/student", (req, res) => {
 
 app.put("/api/student/:id", (req, res) => {
   const student = studentArr.filter((s) => s.id == req.params.id);
-//   console.log(req.body);
+  //   console.log(req.body);
   if (req.body !== {} && student.length == 1) {
     const { name, currentClass, division } = req.body;
 
     if (name != undefined && name != "") {
-      student.name = name;
+      student[0].name = name;
     }
     if (currentClass != undefined && currentClass != "") {
-      student.currentClass = currentClass;
+      student[0].currentClass = currentClass;
     }
     if (division != undefined && division != "") {
-      student.division = division;
+      student[0].division = division;
     }
     let newStudentArr = studentArr.filter((s) => s.id != req.params.id);
-    newStudentArr.push(student);
+    newStudentArr.push(student[0]);
     studentArr = [...newStudentArr];
     res.send({ name: student.name });
   } else {
-    console.log("in");
+    // console.log("in");
     //   res.status(400);
     res.sendStatus(400);
   }
